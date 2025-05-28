@@ -1,0 +1,29 @@
+GET http://localhost:5290/games
+
+###
+GET http://localhost:5290/games/2
+
+###
+
+POST http://localhost:5290/games
+Content-Type: application/json
+
+ {
+    "name": "The Legend of Zelda: Breath of the Wild",
+    "genreId": 1,
+    "price": 19.99,
+    "releaseDate": "2015-02-13"
+  }
+
+###
+PUT http://localhost:5290/games/2
+Content-Type: application/json
+
+{
+  "name": "Mario 3D World",
+  "genreId": 2,
+  "price": 59.99,
+  "releaseDate": "2020-05-19"
+}
+###
+DELETE http://localhost:5290/games/2
