@@ -37,7 +37,7 @@ $ dotnet run
 
 ---
 
-#### 📌 Key Features
+#### 📌 Features
 
 * Minimal API style (no controllers)
 * SQLite + EF Core with code-first migrations
@@ -68,6 +68,20 @@ GET     /genres            # Get all genres
 
 ####  Notable Concepts
 
+#### Extension Method Design
+
+MapGamesEndpoints is written as an extension method on WebApplication to keep endpoint mapping modular and reusable.
+
+The MinimalApis.Extensions package enables automatic validation of incoming DTOs based on data annotations ([Required], [StringLength], etc.).
+
+#### DTO Mapping via Extension Methods
+
+Domain entities are mapped to DTOs using custom extension methods like .ToGameDetailsDTO(), .UpdateGameDTO .ToEntity(), etc., for cleaner separation between internal data and API responses.
+
+#### Safe POST Responses
+POST /games returns 201 Created with Location header using CreatedAtRoute, and only exposes necessary fields via DTOs.
+
+
 #####  Why use DTOs?
 
 DTOs are used instead of entities in API responses to expose only safe and necessary data.
@@ -83,17 +97,26 @@ You can delete `GameStore.db`, and it will be regenerated on next `dotnet run`.
 
 Route naming via `WithName(...)` is used to reference routes programmatically (e.g., `CreatedAtRoute("GetGame")`).
 
+##### Why is GameStoreContext used in the endpoint? - DI
+
+GameStoreContext is automatically injected by ASP.NET Core. It gives access to the database and allows querying tables like Games using Entity Framework Core.
+
 ---
 
 #### EF Core Migration Commands
 
+If you modify entity models or want to add seed data, use the following commands to manage EF Core migrations:
+
 ```bash
 # Add a new migration
-$ dotnet ef migrations add <MigrationName>
+$ dotnet ef migrations add <MigrationName> --output-dir Data/Migrations
 
 # Apply migrations to the database
 $ dotnet ef database update
 ```
 
+#### Used VSCode Extension - REST Client - to send request
+
 #### Docker
 
+coming soon will be practice in this small project
