@@ -1,6 +1,6 @@
-### Asp.Net Core Minimal API
+### AspNet Core Minimal API
 
-A minimal ASP.NET Core Web API built with SQLite and Entity Framework Core to manage games and genres.
+A minimal AspNet Core Web API built with SQLite and Entity Framework Core to manage games and genres.
 
 ---
 
@@ -68,38 +68,40 @@ GET     /genres            # Get all genres
 
 ####  Notable Concepts
 
-#### Extension Method Design
+##### 🔸 Extension Method Design
 
-MapGamesEndpoints is written as an extension method on WebApplication to keep endpoint mapping modular and reusable.
+*  MapGamesEndpoints is written as an extension method on WebApplication to keep endpoint mapping modular and reusable.
 
-The MinimalApis.Extensions package enables automatic validation of incoming DTOs based on data annotations ([Required], [StringLength], etc.).
+* The MinimalApis.Extensions package enables automatic validation of incoming DTOs based on data annotations ([Required], [StringLength], etc.).
 
-#### DTO Mapping via Extension Methods
+##### 🔸 DTO Mapping via Extension Methods
 
-Domain entities are mapped to DTOs using custom extension methods like .ToGameDetailsDTO(), .UpdateGameDTO .ToEntity(), etc., for cleaner separation between internal data and API responses.
+* Domain entities are mapped to DTOs using custom extension methods like .ToGameDetailsDTO(), .UpdateGameDTO .ToEntity(), etc., for cleaner separation between internal data and API responses.
 
-#### Safe POST Responses
-POST /games returns 201 Created with Location header using CreatedAtRoute, and only exposes necessary fields via DTOs.
+##### 🔸 Safe POST Responses
+
+* POST /games returns 201 Created with Location header using CreatedAtRoute, and only exposes necessary fields via DTOs.
 
 
-#####  Why use DTOs?
+##### 🔸 Why use DTOs?
 
-DTOs are used instead of entities in API responses to expose only safe and necessary data.
+* DTOs are used instead of entities in API responses to expose only safe and necessary data.
 This prevents leaking internal or sensitive fields and keeps the API contract clean and stable.
 
-#####  Automatic Migration
+##### 🔸 Automatic Migration
 
-The application applies EF Core migrations automatically at startup using `Database.Migrate()`,
-which has the same effect as running `dotnet ef database update`. This is useful during development.
+* The application applies EF Core migrations automatically at startup using `Database.Migrate()`,
+which has the same effect as running `dotnet ef database update`.
+* This is useful during development.
 You can delete `GameStore.db`, and it will be regenerated on next `dotnet run`.
 
-#####  Route Naming
+##### 🔸 Route Naming
 
-Route naming via `WithName(...)` is used to reference routes programmatically (e.g., `CreatedAtRoute("GetGame")`).
+* Route naming via `WithName(...)` is used to reference routes programmatically (e.g., `CreatedAtRoute("GetGame")`).
 
-##### Why is GameStoreContext used in the endpoint? - DI
+##### 🔸 Why is GameStoreContext used in the endpoint? - DI
 
-GameStoreContext is automatically injected by ASP.NET Core. It gives access to the database and allows querying tables like Games using Entity Framework Core.
+* GameStoreContext is automatically injected by AspNet Core. It gives access to the database and allows querying tables like Games using Entity Framework Core.
 
 ---
 
